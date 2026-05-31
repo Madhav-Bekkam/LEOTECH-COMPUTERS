@@ -4,8 +4,8 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import './index.css'
 import App from './App.jsx'
 
-// In a real production app, this would be imported from process.env.VITE_GOOGLE_CLIENT_ID
-const GOOGLE_CLIENT_ID = 'dummy-client-id.apps.googleusercontent.com';
+// This pulls your real Google Client ID from Vercel's Environment Variables
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || 'dummy-client-id.apps.googleusercontent.com';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
