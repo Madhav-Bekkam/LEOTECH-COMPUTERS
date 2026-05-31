@@ -2,6 +2,7 @@ import React from 'react';
 import { MonitorPlay, Code, Briefcase, ArrowRight, Star } from 'lucide-react';
 import { TiltCard } from './Shared';
 import { Background3DScene } from './Background3DScene';
+import { useAppContext } from '../context/AppContext';
 
 const courseColors = [
   { text: 'text-[#00C2FF]', bg: 'bg-[#00C2FF]/10', border: 'border-[#00C2FF]/30', btnHover: 'bg-[#00C2FF]/10 hover:bg-[#00C2FF] hover:text-[#0A0F1E] text-[#00C2FF]' },
@@ -10,6 +11,9 @@ const courseColors = [
 ];
 
 export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthenticated, setCurrentView }) => {
+  const { user } = useAppContext();
+  const isAdmin = user?.role === 'admin';
+  
   if (!landingData) return null;
   return (
     <>
@@ -147,15 +151,15 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
                 <div key={i} style={{ transform: `translateZ(${Math.random() * 30 + 10}px)` }}>
                   <TiltCard 
                     onClick={() => {
+                      if (isAdmin) return;
                       if (!isAuthenticated) {
                         if (setView) setView('login');
                         if (setIsLogin) setIsLogin(true);
                       } else {
-                        if (window.location.pathname.includes('admin')) return;
                         if (setCurrentView) setCurrentView('catalog');
                       }
                     }}
-                    className={`!p-0 !bg-white/5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#00C2FF]/50 hover:shadow-[0_0_30px_rgba(0,194,255,0.4)] transition-all duration-300 backdrop-blur-md group ${isAuthenticated && window.location.pathname.includes('admin') ? 'cursor-default' : 'cursor-pointer'}`}
+                    className={`!p-0 !bg-white/5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#00C2FF]/50 hover:shadow-[0_0_30px_rgba(0,194,255,0.4)] transition-all duration-300 backdrop-blur-md group ${isAdmin ? 'cursor-default' : 'cursor-pointer'}`}
                   >
                     <div className="px-6 py-4 text-2xl md:text-3xl font-space font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 group-hover:from-[#00C2FF] group-hover:to-white transition-all duration-300">
                       {tech}
