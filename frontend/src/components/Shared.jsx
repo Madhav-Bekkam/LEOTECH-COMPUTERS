@@ -31,15 +31,16 @@ export const Card = ({ children, className = '', onClick }) => (
   <div onClick={onClick} className={`glass-card rounded-xl p-6 ${className}`}>{children}</div>
 );
 
-// NEW: 3D Interactive Hover Card
 export const TiltCard = ({ children, className = '', onClick }) => {
-  const [style, setStyle] = useState({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)' });
+  const [style, setStyle] = useState({});
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const handleMouseMove = (e) => {
+    if (isMobile) return;
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - left) / width;
     const y = (e.clientY - top) / height;
-    const rotateX = (0.5 - y) * 25; // Tilt intensity
+    const rotateX = (0.5 - y) * 25; 
     const rotateY = (x - 0.5) * 25;
     
     setStyle({
@@ -49,6 +50,7 @@ export const TiltCard = ({ children, className = '', onClick }) => {
   };
 
   const handleMouseLeave = () => {
+    if (isMobile) return;
     setStyle({ 
       transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)', 
       transition: 'transform 0.5s ease-out' 
@@ -60,16 +62,16 @@ export const TiltCard = ({ children, className = '', onClick }) => {
       onClick={onClick} 
       onMouseMove={handleMouseMove} 
       onMouseLeave={handleMouseLeave} 
-      style={{ ...style, transformStyle: 'preserve-3d' }} 
+      style={!isMobile ? { ...style, transformStyle: 'preserve-3d', willChange: 'transform' } : undefined} 
       className={`glass-card rounded-xl p-6 relative cursor-pointer group ${className}`}
     >
-      {/* 3D Inner Content Wrapper - pushes content closer to the user */}
-      <div style={{ transform: 'translateZ(40px)', transformStyle: 'preserve-3d' }} className="w-full h-full flex flex-col">
+      <div style={!isMobile ? { transform: 'translateZ(40px)', transformStyle: 'preserve-3d' } : undefined} className="w-full h-full flex flex-col">
         {children}
       </div>
       
-      {/* Dynamic Glare Effect */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ transform: 'translateZ(10px)' }}></div>
+      {!isMobile && (
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{ transform: 'translateZ(10px)' }}></div>
+      )}
     </div>
   );
 };
