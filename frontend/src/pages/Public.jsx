@@ -19,6 +19,31 @@ export const Public = () => {
   const [password, setPassword] = useState('Pass@123');
   const [error, setError] = useState('');
 
+  // History API for trackpad back-swipe support on login page
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'login') {
+        setView('login');
+      } else {
+        setView('landing');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash === 'login') setView('login');
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  React.useEffect(() => {
+    const currentHash = window.location.hash.replace('#', '');
+    if (view === 'login' && currentHash !== 'login') {
+      window.history.pushState(null, '', window.location.pathname + '#login');
+    } else if (view === 'landing' && currentHash === 'login') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  }, [view]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
@@ -32,11 +57,17 @@ export const Public = () => {
 
   if (view === 'login') {
     return (
-      <div className="min-h-screen bg-[#0A0F1E] flex items-center justify-center p-4 relative overflow-hidden font-dm perspective-[2000px]">
+      <div 
+        className="min-h-screen bg-[#0A0F1E] flex items-center justify-center p-4 relative overflow-hidden font-dm perspective-[2000px]"
+        onClick={() => setView('landing')}
+      >
         {/* Render 3D Background */}
         <Background3DScene />
 
-        <TiltCard className="w-full max-w-md relative z-10 glow-border border-[#00C2FF]/30 shadow-[0_20px_50px_rgba(0,194,255,0.15)] bg-[#0f172a]/80 backdrop-blur-xl">
+        <TiltCard 
+          className="w-full max-w-md relative z-10 glow-border border-[#00C2FF]/30 shadow-[0_20px_50px_rgba(0,194,255,0.15)] bg-[#0f172a]/80 backdrop-blur-xl"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex justify-center mb-8" style={{ transform: 'translateZ(50px)' }}><Logo size="md" /></div>
           
           <h2 className="text-2xl font-space font-bold text-white mb-6 text-center" style={{ transform: 'translateZ(40px)' }}>
