@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MonitorPlay, Code, Briefcase, ArrowRight, Star } from 'lucide-react';
+import { GoogleLogin } from '@react-oauth/google';
 import { Logo, Card, TiltCard } from '../components/Shared';
 import { Footer } from '../components/Footer'; 
 import { useAppContext } from '../context/AppContext';
@@ -11,7 +12,7 @@ export const Public = () => {
   const [view, setView] = useState('landing');
   const [isLogin, setIsLogin] = useState(true);
   
-  const { login, register, landingData } = useAppContext();
+  const { login, register, landingData, loginWithGoogle } = useAppContext();
   
   const [name, setName] = useState('');
   const [email, setEmail] = useState('student1@leotechcomputers.com');
@@ -62,6 +63,27 @@ export const Public = () => {
               {isLogin ? 'Sign In' : 'Sign Up'}
             </button>
           </form>
+
+          <div className="my-6 flex items-center gap-4">
+            <div className="flex-1 h-px bg-white/10"></div>
+            <span className="text-sm text-slate-500">OR</span>
+            <div className="flex-1 h-px bg-white/10"></div>
+          </div>
+
+          <div className="flex justify-center w-full relative z-20">
+            <GoogleLogin 
+              onSuccess={async (credentialResponse) => {
+                setError('');
+                const success = await loginWithGoogle(credentialResponse.credential);
+                if (!success) setError('Google login failed. Please try again.');
+              }} 
+              onError={() => setError('Google login failed.')}
+              theme="filled_black"
+              shape="rectangular"
+              size="large"
+              width="100%"
+            />
+          </div>
 
           <div className="mt-6 text-center text-sm text-slate-400" style={{ transform: 'translateZ(20px)' }}>
             {isLogin ? "Don't have an account? " : "Already have an account? "}
