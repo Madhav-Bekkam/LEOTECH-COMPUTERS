@@ -92,7 +92,7 @@ export const Admin = () => {
   const handleDeleteCourse = async (id) => { if(window.confirm("Delete this course?")) { await deleteCourse(id); setActiveMenuId(null); }};
   const handleDeleteAssessment = async (id) => { if(window.confirm("Delete this assessment?")) { await deleteAssessment(id); }};
   const openSyllabusBuilder = (course) => { setSyllabusCourse(course); setTempModules(course.modules || []); setActiveMenuId(null); };
-  const saveSyllabus = async () => { await updateCourse(syllabusCourse._id, { modules: tempModules }); setSyllabusCourse(null); };
+  const saveSyllabus = async () => { setIsSubmitting(true); await updateCourse(syllabusCourse._id, { modules: tempModules }); setSyllabusCourse(null); setIsSubmitting(false); };
   
   const addModule = () => setTempModules([...tempModules, { title: 'New Module', lessons: [] }]);
   
@@ -370,7 +370,11 @@ export const Admin = () => {
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Duration (Wks)</label><input type="number" required min="1" value={editingCourse.duration} onChange={e => setEditingCourse({...editingCourse, duration: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-all" /></div>
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Price (₹)</label><input type="number" required min="0" value={editingCourse.price} onChange={e => setEditingCourse({...editingCourse, price: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-all" /></div>
                    </div>
-                   <div className="flex justify-end pt-6"><button type="submit" className="px-8 py-3 bg-[#8B5CF6] text-white font-bold rounded-xl transition-transform hover:scale-105 shadow-lg">Save Changes</button></div>
+                   <div className="flex justify-end pt-6">
+                     <button type="submit" disabled={isSubmitting} className={`px-8 py-3 bg-[#8B5CF6] text-white font-bold rounded-xl transition-all shadow-lg ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}>
+                       {isSubmitting ? 'Saving...' : 'Save Changes'}
+                     </button>
+                   </div>
                  </form>
               </FrostedCard>
             </div>
@@ -406,7 +410,11 @@ export const Admin = () => {
                      </label>
                    </div>
                  </div>
-                 <div className="flex justify-end pt-6 border-t border-white/10 shrink-0 mt-6"><button onClick={saveSyllabus} className="px-8 py-3 bg-[#00C2FF] text-[#0A0F1E] font-bold rounded-xl hover:bg-white transition-colors shadow-lg">Publish Syllabus</button></div>
+                 <div className="flex justify-end pt-6 border-t border-white/10 shrink-0 mt-6">
+                    <button onClick={() => { setIsSubmitting(true); saveSyllabus(); }} disabled={isSubmitting} className={`px-8 py-3 bg-[#00C2FF] text-[#0A0F1E] font-bold rounded-xl transition-all shadow-lg ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white'}`}>
+                      {isSubmitting ? 'Publishing...' : 'Publish Syllabus'}
+                    </button>
+                 </div>
               </FrostedCard>
 
               {editingLessonData && (
@@ -529,7 +537,11 @@ export const Admin = () => {
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Duration (Mins)</label><input type="number" required min="1" value={newAssessment.duration} onChange={e => setNewAssessment({...newAssessment, duration: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#10B981] transition-all" /></div>
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Total Questions</label><input type="number" required min="1" value={newAssessment.questionsCount} onChange={e => setNewAssessment({...newAssessment, questionsCount: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#10B981] transition-all" /></div>
                    </div>
-                   <div className="flex justify-end pt-6"><button type="submit" className="px-8 py-3 bg-[#10B981] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg">Save Assessment</button></div>
+                   <div className="flex justify-end pt-6">
+                      <button type="submit" disabled={isSubmitting} className={`px-8 py-3 bg-[#10B981] text-white font-bold rounded-xl transition-all shadow-lg ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}>
+                        {isSubmitting ? 'Saving...' : 'Save Assessment'}
+                      </button>
+                    </div>
                  </form>
               </FrostedCard>
             </div>
