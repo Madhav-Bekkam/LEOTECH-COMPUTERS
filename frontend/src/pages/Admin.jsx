@@ -296,7 +296,7 @@ export const Admin = () => {
           <div className="flex justify-end mb-8"><button onClick={() => setIsAddingCourse(true)} className="flex items-center gap-2 bg-[#8B5CF6] text-white px-5 py-2.5 rounded-xl font-bold hover:scale-105 transition-transform shadow-lg"><Plus size={18} /> New Course</button></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {safeCourses.map(course => (
-              <FrostedCard key={course._id} onClick={() => openSyllabusBuilder(course)} className="flex flex-col group relative hover:border-[#00C2FF]/50 transition-colors cursor-pointer">
+              <FrostedCard key={course._id} onClick={() => openSyllabusBuilder(course)} className={`flex flex-col group relative hover:border-[#00C2FF]/50 transition-colors cursor-pointer ${activeMenuId === course._id ? 'z-50' : 'z-10'}`}>
                 <div className="flex justify-between items-start mb-4">
                    <div className="flex items-center gap-2">
                      <span className={`text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full border ${course.status === 'Active' ? 'bg-[#10B981]/20 text-[#10B981] border-[#10B981]/30' : 'bg-white/10 text-slate-300 border-white/20'}`}>{course.status || 'Active'}</span>
@@ -308,10 +308,10 @@ export const Admin = () => {
                    <div className="relative">
                      <button onClick={(e) => { e.stopPropagation(); setActiveMenuId(activeMenuId === course._id ? null : course._id); }} className="text-slate-300 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"><MoreVertical size={18} /></button>
                      {activeMenuId === course._id && (
-                       <div className="absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-2xl border border-white/20 rounded-xl shadow-2xl z-20 overflow-hidden animate-[fade-in_0.1s_ease-out]">
-                         <button onClick={(e) => { e.stopPropagation(); setPlayerCourse(course); setActiveLesson(course.modules?.[0]?.lessons?.[0] || null); setCurrentView('coursePlayer'); setActiveMenuId(null); }} className="w-full text-left px-4 py-3 text-sm font-bold text-white hover:bg-white/10 flex items-center gap-3 transition-colors"><Eye size={16}/> Preview Syllabus</button>
-                         <button onClick={(e) => { e.stopPropagation(); openSyllabusBuilder(course); }} className="w-full text-left px-4 py-3 text-sm font-bold text-white hover:bg-white/10 flex items-center gap-3 border-t border-white/10 transition-colors"><Edit size={16}/> Build Syllabus</button>
-                         <button onClick={(e) => { e.stopPropagation(); setEditingCourse(course); setActiveMenuId(null); }} className="w-full text-left px-4 py-3 text-sm font-bold text-white hover:bg-white/10 flex items-center gap-3 border-t border-white/10 transition-colors"><Settings size={16}/> Edit Details</button>
+                       <div className="absolute right-0 mt-2 w-48 bg-[#0F172A] border border-white/20 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-[100] overflow-hidden animate-[fade-in_0.1s_ease-out]">
+                         <button onClick={(e) => { e.stopPropagation(); setPlayerCourse(course); setActiveLesson(course.modules?.[0]?.lessons?.[0] || null); setCurrentView('coursePlayer'); setActiveMenuId(null); }} className="w-full text-left px-4 py-3 text-sm font-bold text-slate-200 hover:text-white hover:bg-white/10 flex items-center gap-3 transition-colors"><Eye size={16}/> Preview Syllabus</button>
+                         <button onClick={(e) => { e.stopPropagation(); openSyllabusBuilder(course); }} className="w-full text-left px-4 py-3 text-sm font-bold text-slate-200 hover:text-white hover:bg-white/10 flex items-center gap-3 border-t border-white/10 transition-colors"><Edit size={16}/> Build Syllabus</button>
+                         <button onClick={(e) => { e.stopPropagation(); setEditingCourse(course); setActiveMenuId(null); }} className="w-full text-left px-4 py-3 text-sm font-bold text-slate-200 hover:text-white hover:bg-white/10 flex items-center gap-3 border-t border-white/10 transition-colors"><Settings size={16}/> Edit Details</button>
                          <button onClick={(e) => { e.stopPropagation(); handleDeleteCourse(course._id); }} className="w-full text-left px-4 py-3 text-sm font-bold text-red-400 hover:bg-red-500/20 flex items-center gap-3 border-t border-white/10 transition-colors"><Trash2 size={16}/> Delete</button>
                        </div>
                      )}
