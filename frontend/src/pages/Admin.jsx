@@ -51,6 +51,27 @@ export const Admin = () => {
     if (currentView === 'payments') getAllPayments().then(setAllPayments);
   }, [currentView]);
 
+  // Sync Browser History with Dashboard Tabs
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) setCurrentView(hash);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    if (window.location.hash) {
+      handleHashChange();
+    } else {
+      window.history.replaceState(null, '', window.location.pathname + '#' + currentView);
+    }
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  useEffect(() => {
+    if (window.location.hash !== `#${currentView}`) {
+      window.history.pushState(null, '', window.location.pathname + `#${currentView}`);
+    }
+  }, [currentView]);
+
   // Close dropdown menu when clicking anywhere outside
   useEffect(() => {
     const closeMenu = () => setActiveMenuId(null);

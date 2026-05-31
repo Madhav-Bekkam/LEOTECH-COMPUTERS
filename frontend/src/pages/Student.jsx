@@ -45,6 +45,27 @@ export const Student = () => {
     }
   }, [currentView, user]);
 
+  // Sync Browser History with Dashboard Tabs
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) setCurrentView(hash);
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    if (window.location.hash) {
+      handleHashChange();
+    } else {
+      window.history.replaceState(null, '', window.location.pathname + '#' + currentView);
+    }
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  React.useEffect(() => {
+    if (window.location.hash !== `#${currentView}`) {
+      window.history.pushState(null, '', window.location.pathname + `#${currentView}`);
+    }
+  }, [currentView]);
+
   const handleEnrollmentRequest = async (e) => {
     e.preventDefault();
     try {
