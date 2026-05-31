@@ -15,8 +15,8 @@ export const Public = () => {
   const { login, register, landingData, loginWithGoogle } = useAppContext();
   
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('student1@leotechcomputers.com');
-  const [password, setPassword] = useState('Pass@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   // History API for trackpad back-swipe support on login page
@@ -83,11 +83,11 @@ export const Public = () => {
             )}
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-1">Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full bg-[#0A0F1E]/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00C2FF] transition-all focus:shadow-[0_0_15px_rgba(0,194,255,0.3)]" />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full bg-[#0A0F1E]/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00C2FF] transition-all focus:shadow-[0_0_15px_rgba(0,194,255,0.3)]" placeholder="enter your email" />
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-1">Password</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full bg-[#0A0F1E]/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00C2FF] transition-all focus:shadow-[0_0_15px_rgba(0,194,255,0.3)]" />
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="w-full bg-[#0A0F1E]/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#00C2FF] transition-all focus:shadow-[0_0_15px_rgba(0,194,255,0.3)]" placeholder="enter password" />
             </div>
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button type="submit" className="w-full py-3 mt-4 rounded-lg bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,194,255,0.4)]">
