@@ -144,8 +144,12 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
             <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-12 drop-shadow-lg">Industry Tools You Will Master</p>
             <div className="flex flex-wrap justify-center gap-6 md:gap-10 opacity-90 transition-opacity duration-500">
               {landingData.techStack.filter(t => t.trim() !== '').map((tech, i) => (
-                <div key={i} className="text-2xl md:text-3xl font-space font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 px-6 py-4 bg-white/10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:-translate-y-2 hover:scale-110 hover:bg-white/20 transition-all duration-300 cursor-default backdrop-blur-md" style={{ transform: `translateZ(${Math.random() * 30 + 10}px)` }}>
-                  {tech}
+                <div key={i} style={{ transform: `translateZ(${Math.random() * 30 + 10}px)` }}>
+                  <TiltCard className="!p-0 !bg-white/5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#00C2FF]/50 hover:shadow-[0_0_30px_rgba(0,194,255,0.4)] transition-all duration-300 cursor-pointer backdrop-blur-md group">
+                    <div className="px-6 py-4 text-2xl md:text-3xl font-space font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 group-hover:from-[#00C2FF] group-hover:to-white transition-all duration-300">
+                      {tech}
+                    </div>
+                  </TiltCard>
                 </div>
               ))}
             </div>
