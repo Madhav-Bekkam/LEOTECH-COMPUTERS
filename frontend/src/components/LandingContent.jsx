@@ -151,10 +151,11 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
                         if (setView) setView('login');
                         if (setIsLogin) setIsLogin(true);
                       } else {
+                        if (window.location.pathname.includes('admin')) return;
                         if (setCurrentView) setCurrentView('catalog');
                       }
                     }}
-                    className="!p-0 !bg-white/5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#00C2FF]/50 hover:shadow-[0_0_30px_rgba(0,194,255,0.4)] transition-all duration-300 cursor-pointer backdrop-blur-md group"
+                    className={`!p-0 !bg-white/5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#00C2FF]/50 hover:shadow-[0_0_30px_rgba(0,194,255,0.4)] transition-all duration-300 backdrop-blur-md group ${isAuthenticated && window.location.pathname.includes('admin') ? 'cursor-default' : 'cursor-pointer'}`}
                   >
                     <div className="px-6 py-4 text-2xl md:text-3xl font-space font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 group-hover:from-[#00C2FF] group-hover:to-white transition-all duration-300">
                       {tech}
