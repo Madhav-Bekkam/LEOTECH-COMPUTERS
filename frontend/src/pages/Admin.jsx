@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Users, BookOpen, Settings, Plus, MoreVertical, Search, ShieldCheck, X, Trash2, Edit, FileText, Globe, QrCode, Eye } from 'lucide-react';
+import { LayoutDashboard, Users, BookOpen, Settings, Plus, MoreVertical, Search, ShieldCheck, X, Trash2, Edit, FileText, Globe, QrCode, Eye, User as UserIcon, Camera } from 'lucide-react';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { useAppContext } from '../context/AppContext';
 import { MarkdownViewer } from '../components/MarkdownViewer';
@@ -32,10 +32,57 @@ export const Admin = () => {
   const [activeLesson, setActiveLesson] = useState(null);
   const [editingLessonData, setEditingLessonData] = useState(null);
 
-  const { users, courses, assessments, setInstituteName, instituteName, setLogoSrc, footerData, setFooterData, landingData, setLandingData, updateStudentAccess, deleteStudent, addCourse, deleteCourse, updateCourse, addAssessment, deleteAssessment, getAllRequests, getAllPayments, updateRequestStatus, verifyPayment, uploadCoursePdf, paymentSettings, setPaymentSettings } = useAppContext();
+  const { user, updateUserProfile, changePassword, users, courses, assessments, setInstituteName, instituteName, setLogoSrc, footerData, setFooterData, landingData, setLandingData, updateStudentAccess, deleteStudent, addCourse, deleteCourse, updateCourse, addAssessment, deleteAssessment, getAllRequests, getAllPayments, updateRequestStatus, verifyPayment, uploadCoursePdf, paymentSettings, setPaymentSettings } = useAppContext();
   
   const [allRequests, setAllRequests] = useState([]);
   const [allPayments, setAllPayments] = useState([]);
+  
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ name: '', phone: '', city: '' });
+  const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+  useEffect(() => {
+    if (user) setEditForm({ name: user.name || '', phone: user.phone || '', city: user.city || '' });
+  }, [user]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        await updateUserProfile(user._id || user.id, { profilePic: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = async () => {
+    if(window.confirm('Remove profile picture?')) {
+      await updateUserProfile(user._id || user.id, { profilePic: '' });
+    }
+  };
+
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
+    await updateUserProfile(user._id || user.id, editForm);
+    setIsEditing(false);
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      return alert('New passwords do not match.');
+    }
+    const result = await changePassword(passwordForm.currentPassword, passwordForm.newPassword);
+    if (result.success) {
+      alert(result.message);
+      setIsChangingPassword(false);
+      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } else {
+      alert(result.error);
+    }
+  };
   
   const students = Array.isArray(users) ? users.filter(u => u.role === 'student') : [];
   const safeCourses = Array.isArray(courses) ? courses : [];
@@ -53,7 +100,7 @@ export const Admin = () => {
 
   // Sync Browser History with Dashboard Tabs
   useEffect(() => {
-    const validViews = ['overview', 'students', 'courses', 'assessments', 'enrollments', 'payments', 'platform'];
+    const validViews = ['overview', 'students', 'courses', 'assessments', 'enrollments', 'payments', 'homepage', 'paymentQR', 'settings', 'profile'];
     
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
@@ -103,6 +150,7 @@ export const Admin = () => {
     { id: 'homepage', label: 'Homepage Control', icon: Globe },
     { id: 'paymentQR', label: 'Payment Details', icon: QrCode },
     { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'profile', label: 'My Profile', icon: UserIcon },
   ];
 
   const handleToggleCourseAccess = async (courseId, currentlyEnrolled) => {
@@ -746,6 +794,114 @@ export const Admin = () => {
         </div>
       )}
       
+      {currentView === 'profile' && (
+        <div className="animate-[fade-in_0.3s_ease-out] max-w-3xl">
+          <h3 className="text-2xl font-space font-bold text-white mb-6 drop-shadow-md">Admin Profile Settings</h3>
+          
+          <div className="bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl rounded-3xl p-8 mb-8 flex flex-col md:flex-row items-center md:items-start gap-8 relative">
+            <div className="relative group shrink-0">
+              {user?.profilePic ? (
+                <img src={user.profilePic} alt="Profile" className="w-32 h-32 rounded-full object-cover border-4 border-[#00C2FF]/50 shadow-[0_0_20px_rgba(0,194,255,0.3)] bg-[#0A0F1E]" />
+              ) : (
+                <div className="w-32 h-32 rounded-full bg-gradient-to-tr from-[#00C2FF] to-[#8B5CF6] flex items-center justify-center text-white font-bold text-4xl shadow-inner border-4 border-white/20">
+                  {user?.name?.charAt(0) || 'A'}
+                </div>
+              )}
+              
+              <label className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity backdrop-blur-sm border-4 border-transparent">
+                <Camera size={24} className="text-white mb-1" />
+                <span className="text-xs font-bold text-white">Change</span>
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+              </label>
+            </div>
+
+            <div className="flex-1 text-center md:text-left space-y-2">
+              <div className="flex items-center justify-center md:justify-start gap-3">
+                <h2 className="text-3xl font-space font-bold text-white drop-shadow-sm">{user?.name}</h2>
+                <ShieldCheck className="text-[#10B981]" size={24} />
+              </div>
+              <p className="text-slate-300 text-lg">{user?.email}</p>
+              <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-4">
+                <label className="px-5 py-2 bg-[#00C2FF]/20 text-[#00C2FF] border border-[#00C2FF]/40 rounded-xl text-sm font-bold cursor-pointer hover:bg-[#00C2FF] hover:text-[#0A0F1E] transition-all shadow-sm">
+                  Upload Photo
+                  <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+                </label>
+                {user?.profilePic && (
+                  <button onClick={handleRemoveImage} className="px-5 py-2 bg-red-500/20 text-red-400 border border-red-500/40 rounded-xl text-sm font-bold hover:bg-red-500 hover:text-white transition-all flex items-center gap-2 shadow-sm">
+                    <Trash2 size={16} /> Remove
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <TiltCard className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-3xl p-8">
+            <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+               <h4 className="text-xl font-bold text-white">Personal Information</h4>
+               <button onClick={() => setIsEditing(!isEditing)} className="text-sm font-bold text-[#00C2FF] hover:underline px-4 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                 {isEditing ? 'Cancel' : 'Edit Details'}
+               </button>
+            </div>
+            
+            <form onSubmit={handleProfileUpdate} className="space-y-6">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                   <label className="block text-sm text-slate-400 mb-2">Full Name</label>
+                   <input type="text" disabled={!isEditing} value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] disabled:opacity-50 disabled:cursor-not-allowed transition-colors" />
+                 </div>
+                 <div>
+                   <label className="block text-sm text-slate-400 mb-2">Phone Number</label>
+                   <input type="text" disabled={!isEditing} value={editForm.phone} onChange={e => setEditForm({...editForm, phone: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] disabled:opacity-50 disabled:cursor-not-allowed transition-colors" placeholder="+91 XXXXX XXXXX" />
+                 </div>
+                 <div className="md:col-span-2">
+                   <label className="block text-sm text-slate-400 mb-2">City</label>
+                   <input type="text" disabled={!isEditing} value={editForm.city} onChange={e => setEditForm({...editForm, city: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] disabled:opacity-50 disabled:cursor-not-allowed transition-colors" placeholder="Hyderabad" />
+                 </div>
+               </div>
+               
+               {isEditing && (
+                 <div className="flex justify-end pt-4">
+                   <button type="submit" className="px-8 py-3 bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg">Save Changes</button>
+                 </div>
+               )}
+            </form>
+          </TiltCard>
+
+          {user?.provider !== 'google' && (
+            <TiltCard className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-3xl p-8 mt-8">
+              <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                 <h4 className="text-xl font-bold text-white">Security Settings</h4>
+                 <button onClick={() => setIsChangingPassword(!isChangingPassword)} className="text-sm font-bold text-[#00C2FF] hover:underline px-4 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+                   {isChangingPassword ? 'Cancel' : 'Change Password'}
+                 </button>
+              </div>
+              
+              {isChangingPassword && (
+                <form onSubmit={handlePasswordChange} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm text-slate-400 mb-2">Current Password</label>
+                      <input type="password" required value={passwordForm.currentPassword} onChange={e => setPasswordForm({...passwordForm, currentPassword: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] transition-colors" />
+                    </div>
+                    <div>
+                      <label className="block text-sm text-slate-400 mb-2">New Password</label>
+                      <input type="password" required value={passwordForm.newPassword} onChange={e => setPasswordForm({...passwordForm, newPassword: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] transition-colors" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-sm text-slate-400 mb-2">Confirm New Password</label>
+                      <input type="password" required value={passwordForm.confirmPassword} onChange={e => setPasswordForm({...passwordForm, confirmPassword: e.target.value})} className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] transition-colors" />
+                    </div>
+                  </div>
+                  <div className="flex justify-end pt-4">
+                    <button type="submit" className="px-8 py-3 bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold rounded-xl hover:scale-105 transition-transform shadow-lg">Update Password</button>
+                  </div>
+                </form>
+              )}
+            </TiltCard>
+          )}
+        </div>
+      )}
+
       {currentView === 'landing' && (
         <div className="animate-[fade-in_0.3s_ease-out]">
           <LandingContent landingData={landingData} isAuthenticated={true} setCurrentView={setCurrentView} setView={() => {}} setIsLogin={() => {}} />
