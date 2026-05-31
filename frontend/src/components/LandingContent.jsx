@@ -64,7 +64,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
               </div>
             ))}
           </TiltCard>
-        </div>
+        </motion.div>
       )}
 
       {landingData.visibility?.whyUs !== false && (
