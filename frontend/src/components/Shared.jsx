@@ -4,9 +4,9 @@ import { useAppContext } from '../context/AppContext';
 export const Logo = ({ size = 'md', onClick }) => {
   const { logoSrc, instituteName } = useAppContext();
   const sizes = { 
-    sm: { box: 'h-6 w-6 text-xs', text: 'text-base', img: 'h-6' },
-    md: { box: 'h-8 w-8 text-sm', text: 'text-xl', img: 'h-8' },
-    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-14' }
+    sm: { box: 'h-6 w-6 text-xs', text: 'text-base', img: 'h-8 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' },
+    md: { box: 'h-8 w-8 text-sm', text: 'text-xl', img: 'h-12 md:h-14 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' },
+    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-16 md:h-20 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]' }
   };
   
   return (
