@@ -4,15 +4,17 @@ import { useAppContext } from '../context/AppContext';
 export const Logo = ({ size = 'md', onClick }) => {
   const { logoSrc, instituteName } = useAppContext();
   const sizes = { 
-    sm: { box: 'h-6 w-6 text-xs', text: 'text-base', img: 'h-8 w-auto' },
-    md: { box: 'h-8 w-8 text-sm', text: 'text-xl', img: 'h-12 w-auto' },
-    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-16 md:h-20 w-auto' }
+    sm: { box: 'h-6 w-6 text-xs', text: 'text-base', img: 'h-8' },
+    md: { box: 'h-8 w-8 text-sm', text: 'text-xl', img: 'h-10 md:h-12' },
+    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-14 md:h-16' }
   };
   
   return (
     <div onClick={onClick} className="flex items-center gap-3 font-space font-bold cursor-pointer hover:opacity-90 transition-opacity">
       {logoSrc ? (
-        <img src={logoSrc} alt="Logo" className={`${sizes[size].img} object-contain rounded-2xl`} />
+        <div className={`relative ${sizes[size].img} aspect-[5/3] overflow-hidden rounded-xl flex shrink-0 items-center justify-center`}>
+          <img src={logoSrc} alt="Logo" className="w-full h-full object-cover scale-[1.7]" />
+        </div>
       ) : (
         <div className={`${sizes[size].box} flex flex-shrink-0 items-center justify-center bg-[#00C2FF]/10 text-[#00C2FF] border border-[#00C2FF]/50 rounded-lg shadow-[0_0_15px_rgba(0,194,255,0.4)]`}>
           LT
