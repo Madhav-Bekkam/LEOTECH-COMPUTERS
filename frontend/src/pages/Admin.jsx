@@ -51,6 +51,15 @@ export const Admin = () => {
     if (currentView === 'payments') getAllPayments().then(setAllPayments);
   }, [currentView]);
 
+  // Close dropdown menu when clicking anywhere outside
+  useEffect(() => {
+    const closeMenu = () => setActiveMenuId(null);
+    if (activeMenuId) {
+      window.addEventListener('click', closeMenu);
+    }
+    return () => window.removeEventListener('click', closeMenu);
+  }, [activeMenuId]);
+
   const links = [
     { id: 'overview', label: 'Overview Dashboard', icon: LayoutDashboard },
     { id: 'enrollments', label: 'Enrollment Requests', icon: ShieldCheck },
