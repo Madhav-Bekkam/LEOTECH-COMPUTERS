@@ -727,18 +727,27 @@ export const Admin = () => {
                     </div>
                     <div className="flex-1 space-y-4 w-full text-center sm:text-left">
                       <p className="text-sm text-slate-400">Upload a new QR code image. This will be displayed to students during checkout.</p>
-                      <label className="w-full py-4 border-2 border-dashed border-[#00C2FF]/40 rounded-xl text-[#00C2FF] hover:text-white hover:border-[#00C2FF] transition-colors font-bold flex flex-col items-center justify-center gap-2 bg-[#00C2FF]/10 cursor-pointer">
-                        <QrCode size={24} /> 
-                        <span>Upload New QR Image</span>
-                        <input type="file" accept="image/*" className="hidden" onChange={(e) => {
-                          const file = e.target.files[0];
-                          if(file) {
-                            const reader = new FileReader();
-                            reader.onloadend = () => setPaymentSettings({...paymentSettings, qrImage: reader.result});
-                            reader.readAsDataURL(file);
-                          }
-                        }} />
-                      </label>
+                      <div className="flex flex-col sm:flex-row gap-4 w-full">
+                        <label className="flex-1 py-4 border-2 border-dashed border-[#00C2FF]/40 rounded-xl text-[#00C2FF] hover:text-white hover:border-[#00C2FF] transition-colors font-bold flex flex-col items-center justify-center gap-2 bg-[#00C2FF]/10 cursor-pointer">
+                          <QrCode size={24} /> 
+                          <span>Upload QR</span>
+                          <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                            const file = e.target.files[0];
+                            if(file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => setPaymentSettings({...paymentSettings, qrImage: reader.result});
+                              reader.readAsDataURL(file);
+                            }
+                          }} />
+                        </label>
+                        <button onClick={() => setPaymentSettings({...paymentSettings, qrImage: ''})} className="flex-1 py-4 border-2 border-dashed border-red-500/40 rounded-xl text-red-500 hover:text-white hover:border-red-500 transition-colors font-bold flex flex-col items-center justify-center gap-2 bg-red-500/10">
+                          <Trash2 size={24} />
+                          <span>Delete QR</span>
+                        </button>
+                      </div>
+                      <button onClick={() => alert("Payment settings saved successfully!")} className="w-full py-3 bg-[#00C2FF] text-[#0A0F1E] font-bold rounded-xl hover:bg-white transition-colors shadow-lg mt-4">
+                        Save Changes
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -789,6 +798,11 @@ export const Admin = () => {
                 ))}
                 <button onClick={() => setFooterData({...footerData, faqs: [...footerData.faqs, { q: '', a: '' }]})} className="text-sm font-bold text-[#00C2FF] hover:text-white px-4 py-2 bg-[#00C2FF]/10 rounded-lg transition-colors border border-[#00C2FF]/20 mt-2 inline-block">+ Append FAQ Entry</button>
               </div>
+            </div>
+            <div className="flex justify-end pt-4 border-t border-white/10 mt-6">
+              <button onClick={() => alert("Settings saved successfully!")} className="px-8 py-3 bg-[#00C2FF] text-[#0A0F1E] font-bold rounded-xl transition-all shadow-lg hover:bg-white">
+                Save Changes
+              </button>
             </div>
           </div>
         </div>
