@@ -13,7 +13,7 @@ const User = require('./models/User');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://leotech-computers.vercel.app'],
+  origin: ['http://localhost:5173', 'https://leotechcomputers.vercel.app'],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' })); // Increase limit for Base64 image uploads
