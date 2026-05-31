@@ -71,30 +71,30 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
         <section className="py-16 md:py-24 px-4 md:px-6 relative z-10 bg-gradient-to-b from-transparent via-[#0A0F1E]/80 to-transparent backdrop-blur-sm border-y border-white/5">
           <div className="max-w-7xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-12 md:mb-20">
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-space font-bold text-white mb-4 md:mb-6 drop-shadow-lg">Why Learn With Us?</h2>
-              <p className="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl drop-shadow-md">We don't just teach theory. We build your engineering mindset with real tools, real projects, and real guidance.</p>
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-space font-bold text-white mb-4 md:mb-6 drop-shadow-lg">{landingData.whyUs?.title || "Why Learn With Us?"}</h2>
+              <p className="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl drop-shadow-md">{landingData.whyUs?.subtitle || "We don't just teach theory. We build your engineering mindset with real tools, real projects, and real guidance."}</p>
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 perspective-[1000px]">
               <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
               <TiltCard className="border border-[#00C2FF]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,194,255,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C2FF]/20 to-transparent flex items-center justify-center text-[#00C2FF] mb-8 shadow-inner border border-[#00C2FF]/20" style={{ transform: 'translateZ(30px)' }}><MonitorPlay size={32} /></div>
-                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Live & Interactive</h3>
-                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Engage directly with instructors, ask questions in real-time, and get your doubts resolved instantly during live sessions.</p>
+                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>{landingData.whyUs?.cards?.[0]?.title || "Live & Interactive"}</h3>
+                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>{landingData.whyUs?.cards?.[0]?.desc || "Engage directly with instructors, ask questions in real-time, and get your doubts resolved instantly during live sessions."}</p>
               </TiltCard>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}>
               <TiltCard className="border border-[#8B5CF6]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(139,92,246,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8B5CF6]/20 to-transparent flex items-center justify-center text-[#8B5CF6] mb-8 shadow-inner border border-[#8B5CF6]/20" style={{ transform: 'translateZ(30px)' }}><Code size={32} /></div>
-                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Project-Based</h3>
-                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Build your portfolio with industry-grade, full-stack applications. Stop watching tutorials and start writing production code.</p>
+                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>{landingData.whyUs?.cards?.[1]?.title || "Project-Based"}</h3>
+                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>{landingData.whyUs?.cards?.[1]?.desc || "Build your portfolio with industry-grade, full-stack applications. Stop watching tutorials and start writing production code."}</p>
               </TiltCard>
               </motion.div>
               <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.5 }}>
               <TiltCard className="border border-[#10B981]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(16,185,129,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#10B981]/20 to-transparent flex items-center justify-center text-[#10B981] mb-8 shadow-inner border border-[#10B981]/20" style={{ transform: 'translateZ(30px)' }}><Briefcase size={32} /></div>
-                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Placement Prep</h3>
-                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Get access to premium placement support including resume reviews, mock technical interviews, and exclusive hiring drives.</p>
+                <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>{landingData.whyUs?.cards?.[2]?.title || "Placement Prep"}</h3>
+                <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>{landingData.whyUs?.cards?.[2]?.desc || "Get access to premium placement support including resume reviews, mock technical interviews, and exclusive hiring drives."}</p>
               </TiltCard>
               </motion.div>
             </div>

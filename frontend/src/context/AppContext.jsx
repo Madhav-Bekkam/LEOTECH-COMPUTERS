@@ -37,6 +37,15 @@ export const AppProvider = ({ children }) => {
       heroTitle: "Build Your Career With",
       heroHighlight: "Industry Experts.",
       heroSubtitle: "From absolute beginner to advanced engineering. Join our premium, project-based learning ecosystem and get ready for top-tier tech roles.",
+      whyUs: {
+        title: "Why Learn With Us?",
+        subtitle: "We don't just teach theory. We build your engineering mindset with real tools, real projects, and real guidance.",
+        cards: [
+          { title: "Live & Interactive", desc: "Engage directly with instructors, ask questions in real-time, and get your doubts resolved instantly during live sessions." },
+          { title: "Project-Based", desc: "Build your portfolio with industry-grade, full-stack applications. Stop watching tutorials and start writing production code." },
+          { title: "Placement Prep", desc: "Get access to premium placement support including resume reviews, mock technical interviews, and exclusive hiring drives." }
+        ]
+      },
       techStack: ['React.js', 'Node.js', 'MongoDB', 'Python', 'AWS', 'Docker', 'Next.js', 'TypeScript'],
       stats: {
         students: "5,000+",

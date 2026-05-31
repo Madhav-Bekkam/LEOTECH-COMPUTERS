@@ -702,6 +702,51 @@ export const Admin = () => {
                   ))}
                 </div>
               </div>
+
+              <div>
+                <h4 className="text-lg font-bold text-white mb-4">"Why Learn With Us" Section</h4>
+                <div className="bg-black/20 p-6 rounded-2xl border border-white/5 space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-300 mb-2">Section Title</label>
+                    <input type="text" value={landingData.whyUs?.title || ''} onChange={e => setLandingData({...landingData, whyUs: {...landingData.whyUs, title: e.target.value}})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-300 mb-2">Section Subtitle</label>
+                    <textarea value={landingData.whyUs?.subtitle || ''} onChange={e => setLandingData({...landingData, whyUs: {...landingData.whyUs, subtitle: e.target.value}})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:border-[#00C2FF] transition-colors h-24" />
+                  </div>
+                  <div className="space-y-4">
+                    <label className="block text-sm font-bold text-slate-300">Feature Cards</label>
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-black/30 p-4 rounded-xl border border-white/10">
+                        <div className="md:col-span-1">
+                          <label className="block text-xs font-bold text-slate-400 mb-1">Card {i+1} Title</label>
+                          <input type="text" value={landingData.whyUs?.cards?.[i]?.title || ''} onChange={e => {
+                            const newCards = [...(landingData.whyUs?.cards || [])];
+                            if(!newCards[i]) newCards[i] = {};
+                            newCards[i].title = e.target.value;
+                            setLandingData({...landingData, whyUs: {...landingData.whyUs, cards: newCards}});
+                          }} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2 text-sm text-white focus:border-[#00C2FF] transition-colors" />
+                        </div>
+                        <div className="md:col-span-2">
+                          <label className="block text-xs font-bold text-slate-400 mb-1">Card {i+1} Description</label>
+                          <input type="text" value={landingData.whyUs?.cards?.[i]?.desc || ''} onChange={e => {
+                            const newCards = [...(landingData.whyUs?.cards || [])];
+                            if(!newCards[i]) newCards[i] = {};
+                            newCards[i].desc = e.target.value;
+                            setLandingData({...landingData, whyUs: {...landingData.whyUs, cards: newCards}});
+                          }} className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-2 text-sm text-white focus:border-[#00C2FF] transition-colors" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div className="flex justify-end pt-4 border-t border-white/10 mt-6">
+              <button onClick={() => alert("Homepage settings saved successfully!")} className="px-8 py-3 bg-[#00C2FF] text-[#0A0F1E] font-bold rounded-xl transition-all shadow-lg hover:bg-white">
+                Save Changes
+              </button>
             </div>
           </div>
         </div>
