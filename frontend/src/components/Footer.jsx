@@ -10,7 +10,7 @@ export const Footer = () => {
 
   return (
     // mt-16 pushes it down, rounded-t-3xl gives it a modern "docked" look
-    <footer className="mt-16 border-t border-slate-800 bg-[#070b14]/80 backdrop-blur-xl pt-12 pb-6 px-8 relative w-full shrink-0 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+    <footer className="border-t border-slate-800 bg-[#070b14]/80 backdrop-blur-xl pt-12 pb-6 px-8 relative w-full shrink-0 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
         <div>
           <Logo size="md" />
