@@ -12,7 +12,7 @@ export const Logo = ({ size = 'md', onClick }) => {
   return (
     <div onClick={onClick} className="flex items-center gap-3 font-space font-bold cursor-pointer hover:opacity-90 transition-opacity">
       {logoSrc ? (
-        <img src={logoSrc} alt="Logo" className={`${sizes[size].img} object-contain rounded`} />
+        <img src={logoSrc} alt="Logo" className={`${sizes[size].img} object-contain rounded mix-blend-screen`} />
       ) : (
         <div className={`${sizes[size].box} flex flex-shrink-0 items-center justify-center bg-[#00C2FF]/10 text-[#00C2FF] border border-[#00C2FF]/50 rounded-lg shadow-[0_0_15px_rgba(0,194,255,0.4)]`}>
           LT
