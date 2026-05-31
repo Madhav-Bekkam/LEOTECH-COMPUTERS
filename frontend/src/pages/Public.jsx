@@ -37,7 +37,7 @@ export const Public = () => {
         <Background3DScene />
 
         <TiltCard className="w-full max-w-md relative z-10 glow-border border-[#00C2FF]/30 shadow-[0_20px_50px_rgba(0,194,255,0.15)] bg-[#0f172a]/80 backdrop-blur-xl">
-          <div className="flex justify-center mb-8" style={{ transform: 'translateZ(50px)' }}><Logo size="lg" /></div>
+          <div className="flex justify-center mb-8" style={{ transform: 'translateZ(50px)' }}><Logo size="md" /></div>
           
           <h2 className="text-2xl font-space font-bold text-white mb-6 text-center" style={{ transform: 'translateZ(40px)' }}>
             {isLogin ? 'Welcome Back' : 'Create an Account'}
