@@ -6,7 +6,7 @@ export const Logo = ({ size = 'md', onClick }) => {
   const sizes = { 
     sm: { box: 'h-6 w-6 text-xs', text: 'text-base', img: 'h-8' },
     md: { box: 'h-8 w-8 text-sm', text: 'text-xl', img: 'h-10 md:h-12' },
-    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-14 md:h-16' }
+    lg: { box: 'h-14 w-14 text-2xl', text: 'text-4xl', img: 'h-16 md:h-16' }
   };
   
   return (
