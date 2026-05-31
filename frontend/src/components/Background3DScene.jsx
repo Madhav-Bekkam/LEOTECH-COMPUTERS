@@ -50,16 +50,16 @@ const CursorTracker = ({ children }) => {
 export const Background3DScene = () => {
   return (
     <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 50 }} dpr={[1, 1.5]} performance={{ min: 0.5 }}>
         <ambientLight intensity={0.2} />
         <directionalLight position={[10, 10, 10]} intensity={1} />
         {/* Cinematic Colored Lighting */}
         <pointLight position={[-10, -10, -10]} intensity={2} color="#00C2FF" />
         <pointLight position={[10, 10, 10]} intensity={2} color="#8B5CF6" />
 
-        {/* Deep Space Starfield tracking the cursor */}
+        {/* Deep Space Starfield tracking the cursor - OPTIMIZED */}
         <CursorTracker>
-          <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
+          <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
         </CursorTracker>
 
         {/* Floating Abstract Tech Geometries (Stationary) */}
@@ -67,9 +67,9 @@ export const Background3DScene = () => {
         <RotatingWireframe position={[6, -3, -8]} color="#8B5CF6" scale={2.5} speed={0.15} />
         <RotatingWireframe position={[0, -6, -12]} color="#10B981" scale={3} speed={0.1} />
 
-        {/* Central Morphing Liquid Core (Stationary) */}
-        <Float speed={3} rotationIntensity={2} floatIntensity={2} position={[0, 0, -15]}>
-          <Sphere args={[5, 64, 64]}>
+        {/* Central Morphing Liquid Core (Stationary) - OPTIMIZED GEOMETRY */}
+        <Float speed={2} rotationIntensity={1} floatIntensity={1} position={[0, 0, -15]}>
+          <Sphere args={[5, 32, 32]}>
             <MeshDistortMaterial 
               color="#0A0F1E" 
               envMapIntensity={0.5} 
