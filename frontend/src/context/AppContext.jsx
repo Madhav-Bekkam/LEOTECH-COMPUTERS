@@ -69,11 +69,50 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-  useEffect(() => { localStorage.setItem('instituteName', instituteName); }, [instituteName]);
-  useEffect(() => { if (logoSrc) localStorage.setItem('logoSrc', logoSrc); }, [logoSrc]);
-  useEffect(() => { localStorage.setItem('footerData', JSON.stringify(footerData)); }, [footerData]);
-  useEffect(() => { localStorage.setItem('landingData', JSON.stringify(landingData)); }, [landingData]);
-  useEffect(() => { localStorage.setItem('paymentSettings', JSON.stringify(paymentSettings)); }, [paymentSettings]);
+  const saveSettingsToBackend = async (dataPayload) => {
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
+    let role = null;
+    if (userStr) {
+      try { role = JSON.parse(userStr).role; } catch(e){}
+    }
+    if (role !== 'admin' || !token) return;
+
+    try {
+      await fetch(`${API_URL}/settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(dataPayload)
+      });
+    } catch (err) { console.error('Failed to save settings:', err); }
+  };
+
+  useEffect(() => { 
+    localStorage.setItem('instituteName', instituteName); 
+    saveSettingsToBackend({ instituteName });
+  }, [instituteName]);
+  
+  useEffect(() => { 
+    if (logoSrc) {
+      localStorage.setItem('logoSrc', logoSrc); 
+      saveSettingsToBackend({ logoSrc });
+    }
+  }, [logoSrc]);
+  
+  useEffect(() => { 
+    localStorage.setItem('footerData', JSON.stringify(footerData)); 
+    saveSettingsToBackend({ footerData });
+  }, [footerData]);
+  
+  useEffect(() => { 
+    localStorage.setItem('landingData', JSON.stringify(landingData)); 
+    saveSettingsToBackend({ landingData });
+  }, [landingData]);
+  
+  useEffect(() => { 
+    localStorage.setItem('paymentSettings', JSON.stringify(paymentSettings)); 
+    saveSettingsToBackend({ paymentSettings });
+  }, [paymentSettings]);
 
   // Authenticated Fetch Wrapper
   const fetchWithAuth = async (url, options = {}) => {
@@ -93,6 +132,7 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    fetchSettings();
     fetchCourses(); // Courses are public
     if (user) {
       fetchAssessments();
@@ -103,6 +143,22 @@ export const AppProvider = ({ children }) => {
       return () => clearInterval(intervalId);
     }
   }, [user]);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch(`${API_URL}/settings`);
+      const data = await res.json();
+      if (data && data._id) {
+        if (data.instituteName) setInstituteName(data.instituteName);
+        if (data.logoSrc) setLogoSrc(data.logoSrc);
+        if (data.footerData && Object.keys(data.footerData).length > 0) setFooterData(data.footerData);
+        if (data.landingData && Object.keys(data.landingData).length > 0) setLandingData(data.landingData);
+        if (data.paymentSettings && Object.keys(data.paymentSettings).length > 0) setPaymentSettings(data.paymentSettings);
+      }
+    } catch (err) {
+      console.error('Failed to load global settings:', err);
+    }
+  };
 
   const fetchCourses = async () => { try { const res = await fetch(`${API_URL}/courses`); setCourses(await res.json()); } catch (err) { console.error(err); } };
   const fetchAssessments = async () => { try { const res = await fetchWithAuth(`${API_URL}/assessments`); setAssessments(await res.json()); } catch (err) { console.error(err); } };

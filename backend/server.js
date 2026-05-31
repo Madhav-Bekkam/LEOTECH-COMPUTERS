@@ -7,6 +7,7 @@ const assessmentRoutes = require('./routes/assessments');
 const enrollmentRoutes = require('./routes/enrollments');
 const paymentRoutes = require('./routes/payments');
 const notificationRoutes = require('./routes/notifications');
+const settingsRoutes = require('./routes/settings');
 const User = require('./models/User'); 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/settings', settingsRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running securely on port ${PORT}`));
