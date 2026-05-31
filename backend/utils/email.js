@@ -69,7 +69,8 @@ const passwordResetTemplate = `
 
 // Exported Sender Functions
 exports.sendVerificationEmail = async (email, name, token) => {
-  const verifyLink = `http://localhost:5173/verify-email/${token}`;
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const verifyLink = `${frontendUrl}/verify-email/${token}`;
   const html = compileTemplate(verificationTemplate, { baseStyles, name, verifyLink });
   
   await transporter.sendMail({
@@ -81,7 +82,8 @@ exports.sendVerificationEmail = async (email, name, token) => {
 };
 
 exports.sendPasswordResetEmail = async (email, name, token) => {
-  const resetLink = `http://localhost:5173/reset-password/${token}`;
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const resetLink = `${frontendUrl}/reset-password/${token}`;
   const html = compileTemplate(passwordResetTemplate, { baseStyles, name, resetLink });
   
   await transporter.sendMail({
