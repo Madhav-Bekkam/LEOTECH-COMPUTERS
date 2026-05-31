@@ -640,11 +640,11 @@ export const Admin = () => {
                 
                 <div>
                   <label className="block text-sm font-bold text-slate-300 mb-4">Payment QR Code</label>
-                  <div className="flex gap-8 items-start">
+                  <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start">
                     <div className="w-48 h-48 bg-white p-2 rounded-xl flex items-center justify-center shrink-0">
                        <img src={paymentSettings.qrImage} alt="Current UPI QR" className="w-full h-full object-contain" />
                     </div>
-                    <div className="flex-1 space-y-4">
+                    <div className="flex-1 space-y-4 w-full text-center sm:text-left">
                       <p className="text-sm text-slate-400">Upload a new QR code image. This will be displayed to students during checkout.</p>
                       <label className="w-full py-4 border-2 border-dashed border-[#00C2FF]/40 rounded-xl text-[#00C2FF] hover:text-white hover:border-[#00C2FF] transition-colors font-bold flex flex-col items-center justify-center gap-2 bg-[#00C2FF]/10 cursor-pointer">
                         <QrCode size={24} /> 
