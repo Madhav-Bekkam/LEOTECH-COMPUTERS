@@ -53,16 +53,28 @@ export const Admin = () => {
 
   // Sync Browser History with Dashboard Tabs
   useEffect(() => {
+    const validViews = ['overview', 'students', 'courses', 'assessments', 'enrollments', 'payments', 'platform'];
+    
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
-      if (hash) setCurrentView(hash);
+      if (validViews.includes(hash)) {
+        setCurrentView(hash);
+      } else {
+        setCurrentView('overview');
+        window.history.replaceState(null, '', window.location.pathname + '#overview');
+      }
     };
+    
     window.addEventListener('hashchange', handleHashChange);
-    if (window.location.hash) {
+    
+    const initialHash = window.location.hash.replace('#', '');
+    if (validViews.includes(initialHash)) {
       handleHashChange();
     } else {
-      window.history.replaceState(null, '', window.location.pathname + '#' + currentView);
+      window.history.replaceState(null, '', window.location.pathname + '#overview');
+      setCurrentView('overview');
     }
+    
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
