@@ -104,8 +104,8 @@ export const Public = () => {
       <nav className="fixed w-full top-0 left-0 flex justify-between items-center px-4 md:px-8 py-4 z-50 backdrop-blur-xl bg-[#0A0F1E]/60 border-b border-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
         <Logo size="md" />
         <div className="flex gap-2 md:gap-4 items-center">
-          <button onClick={() => setView('login')} className="px-3 md:px-5 py-2 text-white font-medium hover:text-[#00C2FF] transition-colors text-sm md:text-base">Login</button>
-          <button onClick={() => { setView('login'); setIsLogin(false); }} className="px-4 md:px-5 py-2 rounded-lg bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,194,255,0.4)] text-sm md:text-base whitespace-nowrap">Start Learning</button>
+          <button onClick={() => setView('login')} className="px-2 md:px-5 py-2 text-white font-medium hover:text-[#00C2FF] transition-colors text-xs md:text-base">Login</button>
+          <button onClick={() => { setView('login'); setIsLogin(false); }} className="px-3 md:px-5 py-2 rounded-lg bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,194,255,0.4)] text-xs md:text-base whitespace-nowrap">Start Learning</button>
         </div>
       </nav>
       

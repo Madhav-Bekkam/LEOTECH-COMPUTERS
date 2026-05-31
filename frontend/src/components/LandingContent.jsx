@@ -15,29 +15,29 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
     <>
       <Background3DScene />
       {landingData.visibility?.hero !== false && (
-        <header className="flex flex-col items-center justify-center text-center pt-56 pb-32 px-4 relative z-10 perspective-[1000px]">
-          <div className="text-4xl md:text-5xl font-space font-black tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#00C2FF] via-white to-[#8B5CF6] mb-6 uppercase drop-shadow-[0_0_25px_rgba(0,194,255,0.6)] animate-[pulse_4s_ease-in-out_infinite]">
+        <header className="flex flex-col items-center justify-center text-center pt-32 sm:pt-40 md:pt-56 pb-20 md:pb-32 px-4 relative z-10">
+          <div className="text-2xl sm:text-4xl md:text-5xl font-space font-black tracking-[0.1em] sm:tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#00C2FF] via-white to-[#8B5CF6] mb-4 sm:mb-6 uppercase drop-shadow-[0_0_25px_rgba(0,194,255,0.6)] animate-[pulse_4s_ease-in-out_infinite]">
              LEOTECH COMPUTERS
           </div>
-          <div className="inline-block px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold text-[#00C2FF] mb-8 animate-[fade-in_0.5s_ease-out] shadow-[0_0_20px_rgba(0,194,255,0.2)] backdrop-blur-md" style={{ transform: 'translateZ(20px)' }}>
+          <div className="inline-block px-4 sm:px-6 py-2 rounded-full bg-white/5 border border-white/10 text-xs sm:text-sm font-bold text-[#00C2FF] mb-6 sm:mb-8 animate-[fade-in_0.5s_ease-out] shadow-[0_0_20px_rgba(0,194,255,0.2)] backdrop-blur-md">
             {landingData.heroTagline}
           </div>
           
-          <h1 className="text-5xl sm:text-6xl md:text-8xl font-space font-bold text-white mb-6 md:mb-8 animate-[fade-in_0.8s_ease-out] leading-tight max-w-5xl drop-shadow-2xl px-4 md:px-0" style={{ transform: 'translateZ(60px)' }}>
+          <h1 className="text-4xl sm:text-5xl md:text-8xl font-space font-bold text-white mb-6 md:mb-8 animate-[fade-in_0.8s_ease-out] leading-tight max-w-5xl drop-shadow-2xl px-2 sm:px-4 md:px-0">
             {landingData.heroTitle} <br/>
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00C2FF] via-[#8B5CF6] to-[#00C2FF] bg-[length:200%_auto] animate-[pulse_3s_ease-in-out_infinite]">{landingData.heroHighlight}</span>
           </h1>
           
-          <p className="text-lg sm:text-xl md:text-2xl max-w-3xl mb-10 md:mb-12 text-slate-300 animate-[fade-in_1s_ease-out] drop-shadow-md px-4 md:px-0" style={{ transform: 'translateZ(30px)' }}>
+          <p className="text-base sm:text-lg md:text-2xl max-w-3xl mb-8 md:mb-12 text-slate-300 animate-[fade-in_1s_ease-out] drop-shadow-md px-4 md:px-0">
             {landingData.heroSubtitle}
           </p>
           
           {!isAuthenticated ? (
-            <button onClick={() => { setView('login'); setIsLogin(false); }} className="px-10 py-5 rounded-2xl bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold text-xl hover:scale-110 transition-all duration-300 shadow-[0_0_40px_rgba(0,194,255,0.5)] relative flex items-center gap-3 group" style={{ transform: 'translateZ(80px)' }}>
+            <button onClick={() => { setView('login'); setIsLogin(false); }} className="px-6 sm:px-10 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold text-lg sm:text-xl hover:scale-110 transition-all duration-300 shadow-[0_0_40px_rgba(0,194,255,0.5)] flex items-center gap-3 group">
               Explore All Courses <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
             </button>
           ) : (
-            <button onClick={() => { setCurrentView('courses'); }} className="px-10 py-5 rounded-2xl bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold text-xl hover:scale-110 transition-all duration-300 shadow-[0_0_40px_rgba(0,194,255,0.5)] relative flex items-center gap-3 group" style={{ transform: 'translateZ(80px)' }}>
+            <button onClick={() => { setCurrentView('courses'); }} className="px-6 sm:px-10 py-4 sm:py-5 rounded-2xl bg-gradient-to-r from-[#00C2FF] to-[#8B5CF6] text-white font-bold text-lg sm:text-xl hover:scale-110 transition-all duration-300 shadow-[0_0_40px_rgba(0,194,255,0.5)] flex items-center gap-3 group">
               Go To Course Catalog <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
             </button>
           )}
@@ -45,7 +45,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
       )}
 
       {landingData.visibility?.stats !== false && (
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-6 mb-20 md:mb-32 relative z-10 perspective-[1000px]">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-6 mb-20 md:mb-32 relative z-10">
           <TiltCard className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6 py-10 md:px-8 md:py-12 border border-slate-700/50 bg-[#0f172a]/40 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             {[ 
               { l: 'Students Trained', v: landingData.stats?.students || '5,000+' }, 
