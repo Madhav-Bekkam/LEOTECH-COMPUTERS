@@ -22,6 +22,7 @@ export const Admin = () => {
   const [newCourse, setNewCourse] = useState({ title: '', category: '', duration: '', instructor: '', price: '', status: 'Active' });
   const [isAddingAssessment, setIsAddingAssessment] = useState(false);
   const [newAssessment, setNewAssessment] = useState({ title: '', category: '', duration: '', questionsCount: '', status: 'Active' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [activeMenuId, setActiveMenuId] = useState(null); 
   const [editingCourse, setEditingCourse] = useState(null);
@@ -76,9 +77,9 @@ export const Admin = () => {
     await updateStudentAccess(managingUser._id, managingUser.enrolledCourseIds || managingUser.enrolledCourses, newIds);
   };
 
-  const handleAddCourse = async (e) => { e.preventDefault(); if (await addCourse(newCourse)) { setIsAddingCourse(false); setNewCourse({ title: '', category: '', duration: '', instructor: '', price: '', status: 'Active' }); }};
-  const handleUpdateCourseDetails = async (e) => { e.preventDefault(); if (await updateCourse(editingCourse._id, editingCourse)) { setEditingCourse(null); }};
-  const handleAddAssessment = async (e) => { e.preventDefault(); if (await addAssessment(newAssessment)) { setIsAddingAssessment(false); setNewAssessment({ title: '', category: '', duration: '', questionsCount: '', status: 'Active' }); }};
+  const handleAddCourse = async (e) => { e.preventDefault(); setIsSubmitting(true); if (await addCourse(newCourse)) { setIsAddingCourse(false); setNewCourse({ title: '', category: '', duration: '', instructor: '', price: '', status: 'Active' }); } setIsSubmitting(false); };
+  const handleUpdateCourseDetails = async (e) => { e.preventDefault(); setIsSubmitting(true); if (await updateCourse(editingCourse._id, editingCourse)) { setEditingCourse(null); } setIsSubmitting(false); };
+  const handleAddAssessment = async (e) => { e.preventDefault(); setIsSubmitting(true); if (await addAssessment(newAssessment)) { setIsAddingAssessment(false); setNewAssessment({ title: '', category: '', duration: '', questionsCount: '', status: 'Active' }); } setIsSubmitting(false); };
   const handleDeleteCourse = async (id) => { if(window.confirm("Delete this course?")) { await deleteCourse(id); setActiveMenuId(null); }};
   const handleDeleteAssessment = async (id) => { if(window.confirm("Delete this assessment?")) { await deleteAssessment(id); }};
   const openSyllabusBuilder = (course) => { setSyllabusCourse(course); setTempModules(course.modules || []); setActiveMenuId(null); };
@@ -336,7 +337,11 @@ export const Admin = () => {
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Duration (Wks)</label><input type="number" required min="1" value={newCourse.duration} onChange={e => setNewCourse({...newCourse, duration: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-all" /></div>
                      <div><label className="block text-sm font-bold text-slate-300 mb-1">Price (₹)</label><input type="number" required min="0" value={newCourse.price} onChange={e => setNewCourse({...newCourse, price: e.target.value})} className="w-full bg-black/40 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-all" /></div>
                    </div>
-                   <div className="flex justify-end pt-6"><button type="submit" className="px-8 py-3 bg-[#8B5CF6] text-white font-bold rounded-xl transition-transform hover:scale-105 shadow-lg">Save Course</button></div>
+                   <div className="flex justify-end pt-6">
+                     <button type="submit" disabled={isSubmitting} className={`px-8 py-3 bg-[#8B5CF6] text-white font-bold rounded-xl transition-all shadow-lg ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}`}>
+                       {isSubmitting ? 'Saving...' : 'Save Course'}
+                     </button>
+                   </div>
                  </form>
               </FrostedCard>
             </div>
