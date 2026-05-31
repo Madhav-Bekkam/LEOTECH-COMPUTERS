@@ -18,7 +18,7 @@ export const Logo = ({ size = 'md', onClick }) => {
           LT
         </div>
       )}
-      <span className={`text-white tracking-wide ${sizes[size].text}`}>
+      <span className={`text-white tracking-wide ${sizes[size].text} ${logoSrc ? 'hidden sm:inline-block' : 'text-sm sm:text-base'}`}>
         {instituteName.split(' ')[0]} <span className="text-[#00C2FF]">{instituteName.split(' ').slice(1).join(' ')}</span>
       </span>
     </div>
