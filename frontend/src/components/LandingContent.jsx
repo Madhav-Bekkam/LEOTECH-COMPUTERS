@@ -3,6 +3,7 @@ import { MonitorPlay, Code, Briefcase, ArrowRight, Star } from 'lucide-react';
 import { TiltCard } from './Shared';
 import { Background3DScene } from './Background3DScene';
 import { useAppContext } from '../context/AppContext';
+import { motion } from 'framer-motion';
 
 const courseColors = [
   { text: 'text-[#00C2FF]', bg: 'bg-[#00C2FF]/10', border: 'border-[#00C2FF]/30', btnHover: 'bg-[#00C2FF]/10 hover:bg-[#00C2FF] hover:text-[#0A0F1E] text-[#00C2FF]' },
@@ -49,7 +50,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
       )}
 
       {landingData.visibility?.stats !== false && (
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-6 mb-20 md:mb-32 relative z-10">
+        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }} className="max-w-7xl mx-auto w-full px-4 md:px-6 mb-20 md:mb-32 relative z-10">
           <TiltCard className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6 py-10 md:px-8 md:py-12 border border-slate-700/50 bg-[#0f172a]/40 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             {[ 
               { l: 'Students Trained', v: landingData.stats?.students || '5,000+' }, 
@@ -69,27 +70,33 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
       {landingData.visibility?.whyUs !== false && (
         <section className="py-16 md:py-24 px-4 md:px-6 relative z-10 bg-gradient-to-b from-transparent via-[#0A0F1E]/80 to-transparent backdrop-blur-sm border-y border-white/5">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 md:mb-20">
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-12 md:mb-20">
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-space font-bold text-white mb-4 md:mb-6 drop-shadow-lg">Why Learn With Us?</h2>
               <p className="text-slate-300 max-w-2xl mx-auto text-lg md:text-xl drop-shadow-md">We don't just teach theory. We build your engineering mindset with real tools, real projects, and real guidance.</p>
-            </div>
+            </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 perspective-[1000px]">
-              <TiltCard className="border border-[#00C2FF]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,194,255,0.1)]">
+              <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+              <TiltCard className="border border-[#00C2FF]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,194,255,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C2FF]/20 to-transparent flex items-center justify-center text-[#00C2FF] mb-8 shadow-inner border border-[#00C2FF]/20" style={{ transform: 'translateZ(30px)' }}><MonitorPlay size={32} /></div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Live & Interactive</h3>
                 <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Engage directly with instructors, ask questions in real-time, and get your doubts resolved instantly during live sessions.</p>
               </TiltCard>
-              <TiltCard className="border border-[#8B5CF6]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(139,92,246,0.1)]">
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}>
+              <TiltCard className="border border-[#8B5CF6]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(139,92,246,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#8B5CF6]/20 to-transparent flex items-center justify-center text-[#8B5CF6] mb-8 shadow-inner border border-[#8B5CF6]/20" style={{ transform: 'translateZ(30px)' }}><Code size={32} /></div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Project-Based</h3>
                 <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Build your portfolio with industry-grade, full-stack applications. Stop watching tutorials and start writing production code.</p>
               </TiltCard>
-              <TiltCard className="border border-[#10B981]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(16,185,129,0.1)]">
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.5 }}>
+              <TiltCard className="border border-[#10B981]/30 bg-[#0f172a]/60 backdrop-blur-lg shadow-[0_10px_30px_rgba(16,185,129,0.1)] h-full">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#10B981]/20 to-transparent flex items-center justify-center text-[#10B981] mb-8 shadow-inner border border-[#10B981]/20" style={{ transform: 'translateZ(30px)' }}><Briefcase size={32} /></div>
                 <h3 className="text-2xl font-bold text-white mb-4" style={{ transform: 'translateZ(25px)' }}>Placement Prep</h3>
                 <p className="text-slate-300 leading-relaxed text-lg" style={{ transform: 'translateZ(20px)' }}>Get access to premium placement support including resume reviews, mock technical interviews, and exclusive hiring drives.</p>
               </TiltCard>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -98,7 +105,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
       {landingData.visibility?.featured !== false && (
         <section className="py-16 md:py-24 px-4 md:px-6 relative z-10">
           <div className="max-w-7xl mx-auto perspective-[2000px]">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6">
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6">
               <div>
                 <h2 className="text-3xl sm:text-4xl md:text-6xl font-space font-bold text-white mb-4 drop-shadow-lg">Featured Programs</h2>
                 <p className="text-slate-300 max-w-xl text-lg md:text-xl">Fast-track your career with our most highly-rated certification programs.</p>
@@ -108,13 +115,14 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
                   Explore Full Catalog <ArrowRight size={20} />
                 </button>
               )}
-            </div>
+            </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {landingData.featuredCourses.map((fc, i) => {
                 const theme = courseColors[i % 3]; 
                 return (
-                  <TiltCard key={i} className={`flex flex-col bg-[#0f172a]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${theme.border}`}>
+                  <motion.div key={i} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: i * 0.15 }} className="h-full">
+                  <TiltCard className={`flex flex-col h-full bg-[#0f172a]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.4)] ${theme.border}`}>
                     <div className="flex justify-between items-start mb-6" style={{ transform: 'translateZ(20px)' }}>
                       <span className={`text-xs font-bold px-4 py-1.5 rounded-full ${theme.bg} ${theme.text} shadow-inner border border-white/5`}>{fc.category}</span>
                       <div className="flex items-center gap-1 text-sm font-bold text-yellow-400 bg-yellow-400/10 px-3 py-1 rounded-full"><Star size={14} fill="currentColor" /> {fc.rating}</div>
@@ -135,6 +143,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
                       </button>
                     )}
                   </TiltCard>
+                  </motion.div>
                 );
               })}
             </div>
@@ -145,10 +154,10 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
       {landingData.visibility?.techStack !== false && (
         <section className="py-24 px-6 relative z-10 bg-black/60 border-t border-white/5 overflow-hidden backdrop-blur-sm">
           <div className="max-w-7xl mx-auto text-center relative perspective-[1000px]">
-            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-12 drop-shadow-lg">Industry Tools You Will Master</p>
+            <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-12 drop-shadow-lg">Industry Tools You Will Master</motion.p>
             <div className="flex flex-wrap justify-center gap-6 md:gap-10 opacity-90 transition-opacity duration-500">
               {landingData.techStack.filter(t => t.trim() !== '').map((tech, i) => (
-                <div key={i} style={{ transform: `translateZ(${Math.random() * 30 + 10}px)` }}>
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.5, y: 30 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, type: 'spring', bounce: 0.4, delay: i * 0.05 }} style={{ transform: `translateZ(${Math.random() * 30 + 10}px)` }}>
                   <TiltCard 
                     onClick={() => {
                       if (isAdmin) return;
@@ -165,7 +174,7 @@ export const LandingContent = ({ landingData = {}, setView, setIsLogin, isAuthen
                       {tech}
                     </div>
                   </TiltCard>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
